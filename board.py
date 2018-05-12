@@ -36,11 +36,11 @@ def printb():
     for mi, micro in enumerate(mib):
         for ti, tile in enumerate(micro):
             if ti < 3:
-                lines[(3*math.floor(mi/3))] = str(tile)
+                lines[(3*math.floor(mi/3))] += str(tile)
             elif ti < 6:
-                lines[(3*math.floor(mi/3))+1] = str(tile)
+                lines[(3*math.floor(mi/3))+1] += str(tile)
             else:
-                lines[(3*math.floor(mi/3))+2] = str(tile)
+                lines[(3*math.floor(mi/3))+2] += str(tile)
     for line in lines:
         print(line)
 
