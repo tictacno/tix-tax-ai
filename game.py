@@ -1,4 +1,4 @@
-import rules, board
+import rules, board, ai
 
 move_list = []
 
