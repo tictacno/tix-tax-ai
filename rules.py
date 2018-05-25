@@ -1,5 +1,5 @@
 import numpy as np
-import board, game
+import board, game, ai
 
 #Defines if move is valid or not
 def valid_move(x, y):
@@ -114,3 +114,94 @@ def check_macro(x):
             print('It\'s a tie!')
             board.state = 2
             return
+
+#MCTS rules
+#Quite long and drawn out for efficiency
+def check_mcts(state, b):
+    board = state[b]
+    #Checks for 3s in a row
+    if board[0] == board[4] and board[0] == board[8]:
+        #Set all tiles to equal the winning player
+        for t, tile in enumerate(board):
+            state[b][t] = board[0]
+        #Update relevant state data such as:
+        #Macros, validity, fill, and turn
+        state[9][b] = state[b][0]
+        state[10] = 1
+        state[11] = state[b][0]
+        state[12][0] *= -1
+    else if board[2] == board[4] and board[2] == board[6]:
+        for t, tile in enumerate(board):
+            state[b][t] = board[2]
+        state[9][b] = state[b][0]
+        state[10] = 1
+        state[11] = state[b][0]
+        state[12][0] *= -1
+    else if board[0] == board[1] and board[0] == board[2]:
+        for t, tile in enumerate(board):
+            state[b][t] = board[0]
+        state[9][b] = state[b][0]
+        state[10] = 1
+        state[11] = state[b][0]
+        state[12][0] *= -1
+    else if board[3] == board[4] and board[3] == board[5]:
+        for t, tile in enumerate(board):
+            state[b][t] = board[3]
+        state[9][b] = state[b][0]
+        state[10] = 1
+        state[11] = state[b][0]
+        state[12][0] *= -1
+    else if board[6] == board[7] and board[6] == board[8]:
+        for t, tile in enumerate(board):
+            state[b][t] = board[6]
+        state[9][b] = state[b][0]
+        state[10] = 1
+        state[11] = state[b][0]
+        state[12][0] *= -1
+    else if board[0] == board[3] and board[0] == board[0]:
+        for t, tile in enumerate(board):
+            state[b][t] = board[0]
+        state[9][b] = state[b][0]
+        state[10] = 1
+        state[11] = state[b][0]
+        state[12][0] *= -1
+    else if board[1] == board[4] and board[1] == board[7]:
+        for t, tile in enumerate(board):
+            state[b][t] = board[1]
+        state[9][b] = state[b][0]
+        state[10] = 1
+        state[11] = state[b][0]
+        state[12][0] *= -1
+    else if board[2] == board[5] and board[2] == board[8]:
+        for t, tile in enumerate(board):
+            state[b][t] = board[2]
+        state[9][b] = state[b][0]
+        state[10] = 1
+        state[11] = state[b][0]
+        state[12][0] *= -1
+    else if 0 not in board:
+        for t, tile in enumerate(board):
+            state[b][t] = 0
+        state[9][b] = state[b][0]
+        state[10] = 1
+        state[11] = state[b][0]
+        state[12][0] *= -1
+    #Check macro for win
+    macro_board = state[9]
+    if macro_board[0] == macro_board[4] and macro_board[0] == macro_board[8]:
+        #return win
+    else if macro_board[2] == macro_board[4] and macro_board[2] == macro_board[6]:
+        #return win
+    else if macro_board[0] == macro_board[1] and macro_board[0] == macro_board[2]:
+        #return win
+    else if macro_board[3] == macro_board[4] and macro_board[3] == macro_board[5]:
+        #return win
+    else if macro_board[6] == macro_board[7] and macro_board[6] == macro_board[8]:
+        #return win
+    else if macro_board[0] == macro_board[3] and macro_board[0] == macro_board[8]:
+        #return win
+    else if macro_board[1] == macro_board[4] and macro_board[1] == macro_board[7]:
+        #return win
+    else if macro_board[2] == macro_board[5] and macro_board[2] == macro_board[8]:
+        #return win
+    return state
